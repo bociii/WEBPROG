@@ -2,13 +2,19 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CourseController;
 
 route::get('/',[HomeController::class,'home']);
 
+
+
+Route::get('/course', [CourseController::class, 'index'])->name('course.index');
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $user = Auth::user(); // Get the authenticated user
+    return view('course.index', compact('user'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
